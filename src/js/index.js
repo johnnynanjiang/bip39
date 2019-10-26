@@ -835,6 +835,10 @@
         return networks[DOM.network.val()].name == "GRS - Groestlcoin" || networks[DOM.network.val()].name == "GRS - Groestlcoin Testnet";
     }
 
+    function isELA() {
+        return networks[DOM.network.val()].name == "ELA - Elastos"
+    }
+
     function displayBip44Info() {
         // Get the derivation path for the account
         var purpose = parseIntNoNaN(DOM.bip44purpose.val(), 44);
@@ -978,9 +982,12 @@
                 var useUncompressed = useBip38;
                 if (useUncompressed) {
                     keyPair = new bitcoinjs.bitcoin.ECPair(keyPair.d, null, { network: network, compressed: false });
-                    if(isGRS())
+                    if(isGRS()) {
                         keyPair = new groestlcoinjs.ECPair(keyPair.d, null, { network: network, compressed: false });
+                    }
+                    if(isELA()) {
 
+                    }
                 }
                 // get address
                 var address = keyPair.getAddress().toString();
@@ -2163,6 +2170,13 @@
             },
         },
         {
+            name: "ELA - Elastos",
+            onSelect: function () {
+                network = bitcoinjs.bitcoin.networks.elastos;
+                setHdCoin(2305);
+            },
+        },
+        {
             name: "ELLA - Ellaism",
             segwitAvailable: false,
             onSelect: function() {
@@ -2742,7 +2756,7 @@
               setHdCoin(19165);
             },
         },
-	{
+	    {
           name: "SLS - Salus",
           onSelect: function() {
               network = bitcoinjs.bitcoin.networks.salus;

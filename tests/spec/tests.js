@@ -1608,6 +1608,13 @@ it('Allows selection of Groestlcoin Testnet', function(done) {
     };
     testNetwork(done, params);
 });
+it('Allows selection of Elastos', function(done) {
+    var params = {
+        selectText: "ELA - Elastos",
+        firstAddress: "RBuDoVNnzvFsEcX8XKPm8ic4mgiCzjUCNk",
+    };
+    testNetwork(done, params);
+});
 
 // BIP39 seed is set from phrase
 it('Sets the bip39 seed from the prhase', function(done) {

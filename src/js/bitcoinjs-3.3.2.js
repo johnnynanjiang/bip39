@@ -9018,7 +9018,7 @@ var ZERO = Buffer.alloc(1, 0)
 var ONE = Buffer.alloc(1, 1)
 
 var ecurve = require('ecurve')
-var secp256k1 = ecurve.getCurveByName('secp256k1')
+var secp256k1 = ecurve.getCurveByName('secp256r1')
 
 // https://tools.ietf.org/html/rfc6979#section-3.2
 function deterministicGenerateK (hash, x, checkSig) {
@@ -9271,8 +9271,26 @@ ECPair.makeRandom = function (options) {
   return new ECPair(d, null, options)
 }
 
+/*
+function toCode(pubKeyBuf, signType) {
+    return Buffer.concat([Buffer.from([0x21]), pubKeyBuf, Buffer.from([signType])])
+}
+
+function getElaAddress(pubKeyBuf) {
+    const codeBuf = toCode(pubKeyBuf, 0xac)
+    const hashBuf = bcrypto.hash160(codeBuf)
+    const programHashBuf = Buffer.concat([Buffer.from([0x21]), hashBuf])
+
+    return baddress.toBase58Check(programHashBuf)
+}
+
 ECPair.prototype.getAddress = function () {
-  return baddress.toBase58Check(bcrypto.hash160(this.getPublicKeyBuffer()), this.getNetwork().pubKeyHash)
+  getElaAddress(this.getPublicKeyBuffer())
+}
+*/
+
+ECPair.prototype.getAddress = function () {
+    return baddress.toBase58Check(bcrypto.hash160(this.getPublicKeyBuffer()), this.getNetwork().pubKeyHash)
 }
 
 ECPair.prototype.getNetwork = function () {
@@ -9415,7 +9433,7 @@ var BigInteger = require('bigi')
 var ECPair = require('./ecpair')
 
 var ecurve = require('ecurve')
-var curve = ecurve.getCurveByName('secp256k1')
+var curve = ecurve.getCurveByName('secp256r1')
 
 function HDNode (keyPair, chainCode) {
   typeforce(types.tuple('ECPair', types.Buffer256bit), arguments)
