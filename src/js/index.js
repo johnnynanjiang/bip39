@@ -2192,7 +2192,7 @@
             name: "ELA - Elastos",
             onSelect: function () {
                 network = bitcoinjs.bitcoin.networks.elastos;
-                setHdCoin(2305);
+                setHdCoin(0);
             },
         },
         {
